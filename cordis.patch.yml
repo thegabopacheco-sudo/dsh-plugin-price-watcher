@@ -1,0 +1,16 @@
+# dsh-plugin-price-watcher — capa bundle de DSH.
+# Inserta una fila @deepseek-ai/dsh-mcp-client que lanza el servidor como "prices".
+# Tools resultantes: mcp__prices__* (ver README).
+- insert:
+    - id: mcp-price-watcher
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: prices
+        transport: stdio
+        command: !!js process.execPath
+        args:
+          - !!js "(process.env.DSH_HOME && process.env.DSH_HOME.trim() !== '' ? process.env.DSH_HOME : (process.env.USERPROFILE || process.env.HOME || '') + '/.dsh') + '/plugins/price-watcher/server.mjs'"
+        env:
+          ELECTRON_RUN_AS_NODE: '1'
+        failOnStartupError: false
+        toolCallTimeoutMs: 60000
